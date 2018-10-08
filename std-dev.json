@@ -1,0 +1,448 @@
+{
+  "service": {
+    "specVersion": "v2",
+    "catalog_metadata": {
+      "name": "Standard Dev Environment",
+      "description": "Standard Dev Environment\nMongo DB on VMWare\nOpen Liberty\nOptional DevOps Toolchain",
+      "longDescription": "Standard Dev Environment",
+      "providerDisplayName": "",
+      "image": "serviceicon_8.svg",
+      "bullets": [
+        {
+          "title": "Cloud Provider",
+          "description": "IBM Bluemix Platform"
+        },
+        {
+          "title": "DevOps",
+          "description": ""
+        },
+        {
+          "title": "Standard Dev Environment",
+          "description": ""
+        },
+        {
+          "title": "Cloud",
+          "description": ""
+        }
+      ],
+      "author": "admin",
+      "category": "CloudServices"
+    },
+    "tags": [],
+    "parameters": [
+      {
+        "name": "DevOps",
+        "label": "DevOps",
+        "customtype": "string",
+        "type": "string",
+        "immutable": false,
+        "hidden": false,
+        "required": true,
+        "secured": false,
+        "options": [
+          {
+            "value": "Yes",
+            "label": "Yes"
+          },
+          {
+            "value": "No",
+            "label": "No"
+          }
+        ]
+      },
+      {
+        "name": "PlanInstances",
+        "label": "PlanInstances",
+        "customtype": "string",
+        "type": "string",
+        "immutable": true,
+        "hidden": false,
+        "required": false,
+        "secured": false,
+        "default": "1"
+      },
+      {
+        "name": "ResourceLimits",
+        "label": "ResourceLimits",
+        "customtype": "string",
+        "type": "string",
+        "immutable": true,
+        "hidden": false,
+        "required": false,
+        "secured": false,
+        "description": "",
+        "default": "1"
+      }
+    ],
+    "flow": {
+      "conditions": [
+        {
+          "decision": {
+            "title": "decision",
+            "options": [
+              {
+                "case": "Yes",
+                "sequence": {
+                  "0": "ibmchart69f38802"
+                }
+              },
+              {
+                "case": "No",
+                "sequence": {
+                  "0": "demo/datc93227ff"
+                }
+              }
+            ],
+            "id": "decision2a9175e5",
+            "mapped_parameter": "${parameters.DevOps}"
+          }
+        }
+      ],
+      "templates": [
+        {
+          "MongoDB on a Single VM": {
+            "title": "MongoDB on a Single VM",
+            "template_name": "MongoDB on a Single VM",
+            "version": "2.0",
+            "id": "mongodbo3d9f49f1",
+            "template_type": "Terraform",
+            "template_content_type": "VMware vSphere",
+            "template_provider": "VMware vSphere",
+            "instance_name": "",
+            "cloud_connection_name": "VMWARE",
+            "template_data_objects": {},
+            "template_params": {
+              "mongodb_vm_name": "mongodb-vm",
+              "mongodb_vm_dns_servers": "",
+              "mongodb_vm_dns_suffixes": "",
+              "mongodb_vm_domain": "",
+              "mongodb_vm_image": "",
+              "mongodb_vm_root_disk_size": "25",
+              "mongodb_vm_root_disk_controller_type": "scsi",
+              "mongodb_vm_root_disk_datastore": "",
+              "mongodb_vm_root_disk_type": "eager_zeroed",
+              "mongodb_vm_ipv4_gateway": "",
+              "mongodb_vm_ipv4_address": "",
+              "mongodb_vm_memory": "1024",
+              "mongodb_vm_ipv4_prefix_length": "",
+              "mongodb_vm_number_of_vcpu": "1",
+              "mongodb_vm_network_interface_label": "",
+              "mongodb_vm_cluster": "",
+              "mongodb_vm_datacenter": "",
+              "mongodb_vm_folder": "",
+              "mongodb_vm_adapter_type": "vmxnet3",
+              "mongodb_vm_resource_pool": "",
+              "ssh_user": "root",
+              "ssh_user_password": ""
+            },
+            "outputs": []
+          }
+        },
+        {
+          "ibm-charts/ibm-jenkins-dev": {
+            "title": "ibm-charts/ibm-jenkins-dev",
+            "template_name": "ibm-jenkins-dev",
+            "version": "1.0.0",
+            "id": "ibmchart69f38802",
+            "template_type": "Helm",
+            "template_content_type": "IBM Cloud Private",
+            "template_provider": "IBM Cloud Private",
+            "instance_name": "",
+            "cloud_connection_name": "ICP",
+            "template_dataobjects": {},
+            "template_params": {
+              "namespace": "default",
+              "arch": "amd64",
+              "master-name": "jenkins-master",
+              "master-image-repository": "ibmcom/cfc-jenkins-master",
+              "master-image-tag": "2.19.4-1.1",
+              "master-image-pullPolicy": "IfNotPresent",
+              "master-adminUser": "admin",
+              "master-adminPassword": "admin",
+              "master-service-name": "http",
+              "master-service-type": "NodePort",
+              "master-service-externalPort": 8080,
+              "master-service-internalPort": 8080,
+              "master-agentListenerPort": 50000,
+              "master-resourceConstraints-enabled": "",
+              "master-resources-requests-cpu": "500m",
+              "master-resources-requests-memory": "512Mi",
+              "master-resources-limits-cpu": "500m",
+              "master-resources-limits-memory": "512Mi",
+              "agent-image-repository": "ibmcom/cfc-jenkinsci-jnlp-slave",
+              "agent-image-tag": "2.52-2.1",
+              "agent-resourceConstraints-enabled": "",
+              "agent-resources-requests-cpu": "200m",
+              "agent-resources-requests-memory": "256Mi",
+              "agent-resources-limits-cpu": "200m",
+              "agent-resources-limits-memory": "256Mi",
+              "persistence-enabled": true,
+              "persistence-useDynamicProvisioning": "",
+              "homePVC-name": "jenkins-home-pvc",
+              "homePVC-accessMode": "ReadWriteOnce",
+              "homePVC-storageClassName": "",
+              "homePVC-existingClaimName": "",
+              "homePVC-selector-label": "",
+              "homePVC-selector-value": "",
+              "homePVC-size": "1Gi",
+              "rbac-install": true,
+              "rbac-serviceAccountName": "default",
+              "rbac-apiVersion": "v1beta1",
+              "rbac-roleRef": "cluster-admin"
+            },
+            "outputs": []
+          }
+        },
+        {
+          "DEMO/datadog": {
+            "title": "DEMO/datadog",
+            "template_name": "datadog",
+            "version": "0.11.3",
+            "id": "demo/datc93227ff",
+            "template_type": "Helm",
+            "template_content_type": "IBM Cloud Private",
+            "template_provider": "IBM Cloud Private",
+            "instance_name": "",
+            "cloud_connection_name": "ICP",
+            "template_dataobjects": {},
+            "template_params": {
+              "namespace": "default",
+              "image-repository": "datadog/agent",
+              "image-tag": "6.2.0",
+              "image-pullPolicy": "IfNotPresent",
+              "daemonset-enabled": true,
+              "deployment-enabled": "",
+              "deployment-replicas": 1,
+              "kubeStateMetrics-enabled": true,
+              "datadog-apiKey": "ef2835c87595a432cegdsc07210c4f5056de",
+              "datadog-name": "dd-agent",
+              "datadog-logLevel": "WARNING",
+              "datadog-collectEvents": "",
+              "datadog-leaderElection": "",
+              "datadog-resources-requests-cpu": "100m",
+              "datadog-resources-requests-memory": "128Mi",
+              "datadog-resources-limits-cpu": "256m",
+              "datadog-resources-limits-memory": "512Mi",
+              "rbac-create": true,
+              "rbac-serviceAccountName": "default",
+              "kube-state-metrics-rbac-create": true,
+              "kube-state-metrics-rbac-serviceAccountName": "default"
+            },
+            "outputs": []
+          }
+        },
+        {
+          "ibm-charts/ibm-open-liberty": {
+            "title": "ibm-charts/ibm-open-liberty",
+            "template_name": "ibm-open-liberty",
+            "version": "1.2.0",
+            "id": "ibmchartddbeb052",
+            "template_type": "Helm",
+            "template_content_type": "IBM Cloud Private",
+            "template_provider": "IBM Cloud Private",
+            "instance_name": "",
+            "cloud_connection_name": "ICP",
+            "template_dataobjects": {},
+            "template_params": {
+              "namespace": "default",
+              "image-repository": "open-liberty",
+              "image-tag": "latest",
+              "image-pullPolicy": "IfNotPresent",
+              "service-type": "NodePort",
+              "service-name": "openliberty",
+              "service-port": 9443,
+              "service-targetPort": 9443,
+              "ssl-enabled": true,
+              "ssl-useClusterSSLConfiguration": "",
+              "ssl-createClusterSSLConfiguration": "",
+              "ingress-enabled": "",
+              "ingress-secureBackends": true,
+              "ingress-rewriteTarget": "/",
+              "ingress-path": "/openliberty",
+              "persistence-name": "liberty-pvc",
+              "persistence-size": "1Gi",
+              "persistence-useDynamicProvisioning": true,
+              "persistence-storageClassName": "",
+              "persistence-selector-label": "",
+              "persistence-selector-value": "",
+              "logs-persistLogs": "",
+              "logs-persistTransactionLogs": "",
+              "logs-consoleFormat": "json",
+              "logs-consoleLogLevel": "info",
+              "logs-consoleSource": "message, trace, accessLog, ffdc",
+              "microprofile-health-enabled": "",
+              "replicaCount": 1,
+              "autoscaling-enabled": "",
+              "autoscaling-minReplicas": 1,
+              "autoscaling-maxReplicas": "${parameters.PlanInstances}",
+              "autoscaling-targetCPUUtilizationPercentage": 50,
+              "resources-constraints-enabled": "",
+              "resources-requests-cpu": "500m",
+              "resources-requests-memory": "512Mi",
+              "resources-limits-cpu": "${parameters.ResourceLimits}",
+              "resources-limits-memory": "512Mi",
+              "env-jvmArgs": ""
+            },
+            "outputs": []
+          }
+        }
+      ],
+      "resthooks": [],
+      "notifications": [],
+      "sequence": {
+        "0": "mongodbo3d9f49f1",
+        "1": "decision2a9175e5",
+        "2": "ibmchartddbeb052"
+      }
+    },
+    "plans": [
+      {
+        "name": "Standard",
+        "description": "To deploy a Standard plan",
+        "plan_parameters": [
+          {
+            "name": "ResourceLimits",
+            "label": "ResourceLimits",
+            "customtype": "string",
+            "type": "string",
+            "immutable": true,
+            "hidden": false,
+            "required": false,
+            "secured": false,
+            "description": "",
+            "default": "50m"
+          },
+          {
+            "name": "DevOps",
+            "label": "DevOps",
+            "customtype": "string",
+            "type": "string",
+            "immutable": false,
+            "hidden": false,
+            "required": true,
+            "secured": false,
+            "options": [
+              {
+                "value": "Yes",
+                "label": "Yes"
+              },
+              {
+                "value": "No",
+                "label": "No"
+              }
+            ]
+          },
+          {
+            "name": "PlanInstances",
+            "label": "PlanInstances",
+            "customtype": "string",
+            "type": "string",
+            "immutable": true,
+            "hidden": false,
+            "required": false,
+            "secured": false,
+            "default": "1"
+          }
+        ]
+      },
+      {
+        "name": "Silver",
+        "plan_parameters": [
+          {
+            "name": "PlanInstances",
+            "label": "PlanInstances",
+            "customtype": "string",
+            "type": "string",
+            "immutable": true,
+            "hidden": false,
+            "required": false,
+            "secured": false,
+            "default": "10"
+          },
+          {
+            "name": "ResourceLimits",
+            "label": "ResourceLimits",
+            "customtype": "string",
+            "type": "string",
+            "immutable": true,
+            "hidden": false,
+            "required": false,
+            "secured": false,
+            "description": "",
+            "default": "500m"
+          },
+          {
+            "name": "DevOps",
+            "label": "DevOps",
+            "customtype": "string",
+            "type": "string",
+            "immutable": false,
+            "hidden": false,
+            "required": true,
+            "secured": false,
+            "options": [
+              {
+                "value": "Yes",
+                "label": "Yes"
+              },
+              {
+                "value": "No",
+                "label": "No"
+              }
+            ]
+          }
+        ],
+        "description": "10 Instances"
+      },
+      {
+        "name": "Gold",
+        "description": "100 Instances",
+        "plan_parameters": [
+          {
+            "name": "PlanInstances",
+            "label": "PlanInstances",
+            "customtype": "string",
+            "type": "string",
+            "immutable": true,
+            "hidden": false,
+            "required": false,
+            "secured": false,
+            "default": "100"
+          },
+          {
+            "name": "ResourceLimits",
+            "label": "ResourceLimits",
+            "customtype": "string",
+            "type": "string",
+            "immutable": true,
+            "hidden": false,
+            "required": false,
+            "secured": false,
+            "description": "",
+            "default": "5000m"
+          },
+          {
+            "name": "DevOps",
+            "label": "DevOps",
+            "customtype": "string",
+            "type": "string",
+            "immutable": false,
+            "hidden": false,
+            "required": true,
+            "secured": false,
+            "options": [
+              {
+                "value": "Yes",
+                "label": "Yes"
+              },
+              {
+                "value": "No",
+                "label": "No"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
