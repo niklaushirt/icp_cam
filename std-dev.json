@@ -40,7 +40,7 @@
             "label": "Instance Count",
             "customtype": "string",
             "type": "string",
-            "immutable": false,
+            "immutable": true,
             "hidden": false,
             "required": true,
             "secured": false,
@@ -96,7 +96,7 @@
             "label": "DB Virtual CPUs",
             "customtype": "string",
             "type": "string",
-            "immutable": false,
+            "immutable": true,
             "hidden": false,
             "required": false,
             "secured": false,
@@ -445,18 +445,6 @@
         "actions": [],
         "plan_parameters": [
           {
-            "name": "dbvcpu",
-            "label": "DB Virtual CPUs",
-            "customtype": "string",
-            "type": "string",
-            "immutable": false,
-            "hidden": false,
-            "required": false,
-            "secured": false,
-            "description": "DB Virtual CPUs",
-            "default": "1"
-          },
-          {
             "name": "devops",
             "label": "devops",
             "customtype": "string",
@@ -500,50 +488,12 @@
       {
         "name": "Silver",
         "description": "To deploy a Silver plan",
-        "plan_parameters": [
-          {
-            "name": "InstanceCount",
-            "label": "Instance Count",
-            "customtype": "string",
-            "type": "string",
-            "immutable": false,
-            "hidden": false,
-            "required": true,
-            "secured": false,
-            "description": "Number of Instances",
-            "default": "2"
-          }
-        ]
+        "plan_parameters": []
       },
       {
         "name": "Gold",
         "description": "To deploy a Gold plan",
-        "plan_parameters": [
-          {
-            "name": "InstanceCount",
-            "label": "Instance Count",
-            "customtype": "string",
-            "type": "string",
-            "immutable": false,
-            "hidden": false,
-            "required": true,
-            "secured": false,
-            "description": "Number of Instances",
-            "default": "4"
-          },
-          {
-            "name": "dbvcpu",
-            "label": "DB Virtual CPUs",
-            "customtype": "string",
-            "type": "string",
-            "immutable": false,
-            "hidden": false,
-            "required": false,
-            "secured": false,
-            "description": "DB Virtual CPUs",
-            "default": "4"
-          }
-        ]
+        "plan_parameters": []
       }
     ]
   }
